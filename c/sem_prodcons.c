@@ -59,9 +59,9 @@ int main(int argc, char** argv){
      _semaphores = (sem_t*) malloc(NUM_THREADS*sizeof(sem_t));
     for(i = 0; i < NUM_THREADS; i++){
         threadIndexes[i] = i;
+        sem_init(&_semaphores[i], 0, 1);
         pthread_create(&producerThreads[i], NULL, producer, &threadIndexes[i]);
         pthread_create(&consumerThreads[i], NULL, consumer, &threadIndexes[i]);
-        sem_init(&_semaphores[i], 0, 1);
     }
 
     // Espera ate o fim da execucao de todas as threads
@@ -125,7 +125,7 @@ int main(int argc, char** argv){
      indexPtr = (int*) x;
      index = *indexPtr;
 
-     fprintf(stderr, "Producer %d spawned\n", index);
+     // fprintf(stderr, "Producer %d spawned\n", index);
 
      cont = 0;
      while(cont < strlen(PRODUCT)){
