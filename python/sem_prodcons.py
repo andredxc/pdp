@@ -26,7 +26,7 @@ def main():
     _production = [""] * NUM_THREADS
     _semaphores = [threading.Semaphore()] * NUM_THREADS
 
-    # Cria threads de produtores e consumidores e locks
+    # Cria threads de produtores e consumidores
     producerThreads = []
     consumerThreads = []
     for i in range(NUM_THREADS):

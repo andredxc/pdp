@@ -1,8 +1,8 @@
 import sys
 import threading
 
-NUM_THREADS = 0
-PRODUCT = "2" * 30
+NUM_THREADS = 8
+PRODUCT = "2" * 30000
 
 _production = None
 _locks = None
@@ -26,7 +26,7 @@ def main():
     _production = [""] * NUM_THREADS
     _locks = [threading.Lock()] * NUM_THREADS
 
-    # Cria threads de produtores e consumidores e locks
+    # Cria threads de produtores e consumidores
     producerThreads = []
     consumerThreads = []
     for i in range(NUM_THREADS):
