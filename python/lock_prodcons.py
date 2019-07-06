@@ -1,8 +1,9 @@
 import sys
 import threading
+import time
 
 NUM_THREADS = 8
-PRODUCT = "2" * 30000
+PRODUCT = "a" * 5000
 
 _production = None
 _locks = None
@@ -26,11 +27,13 @@ def main():
     _production = [""] * NUM_THREADS
     _locks = [threading.Lock()] * NUM_THREADS
 
+    startTime = time.time()
+
     # Cria threads de produtores e consumidores
     producerThreads = []
     consumerThreads = []
     for i in range(NUM_THREADS):
-        print("Starting threads %d" % i)
+        #print("Starting threads %d" % i)
         producerThreads.append(threading.Thread(target=producer, args=(i,)))
         consumerThreads.append(threading.Thread(target=consumer, args=(i,)))
 
@@ -43,6 +46,10 @@ def main():
     for i in range(NUM_THREADS):
         producerThreads[i].join()
         consumerThreads[i].join()
+
+    endTime = time.time()
+
+    print("SUCCESS! " + str((endTime-startTime)*1000) + "ms")
 
 
 def consumer(index: int):
@@ -65,10 +72,10 @@ def consumer(index: int):
             _locks[index].release()
 
     # Verifica se pa operação deu certo
-    if cont == len(PRODUCT):
-        print("Consumer %d - SUCCESS" % index)
-    else:
-        print("Consumer %d - FAILURE" % index)
+    #if cont == len(PRODUCT):
+        #print("Consumer %d - SUCCESS" % index)
+    #else:
+        #print("Consumer %d - FAILURE" % index)
 
     return
 
@@ -93,10 +100,10 @@ def producer(index: int):
             _locks[index].release()
 
     # Verifica se pa operação deu certo
-    if cont == len(PRODUCT):
-        print("Producer %d - SUCCESS" % index)
-    else:
-        print("Producer %d - FAILURE" % index)
+    #if cont == len(PRODUCT):
+        #print("Producer %d - SUCCESS" % index)
+    #else:
+        #print("Producer %d - FAILURE" % index)
 
     return
 

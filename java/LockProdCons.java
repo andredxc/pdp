@@ -7,7 +7,7 @@ public class LockProdCons{
         int nThreads = 1;
         String inputString = "";
         String baseString = "a";
-        for(int i = 0; i < 30000; i++){
+        for(int i = 0; i < 5000; i++){
             inputString = inputString + baseString;
         }
         
