@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/time.h>
+#include <sys/timeb.h> 
 
 #define PROD_STRING "1"
 #define PROD_STRING_REPS 5000
@@ -19,11 +20,23 @@ void *producer(void *x);
 
 int main(int argc, char** argv){
 
-    int i;
+    int i, diff;
+    struct timeb end, start;
+
+    // Verifica parametros da linha de comando
+    if(argc != 2){
+        fprintf(stderr, "Usage: ./lock <NUM_THREADS>\n");
+        return -1;
+    }
+    NUM_THREADS = atoi(argv[1]);
+    if(NUM_THREADS <= 0){
+        fprintf(stderr, "Usage: ./lock <NUM_THREADS>\n");
+        return -1;
+    }
+    fprintf(stderr, "Running with %d threads\n", NUM_THREADS);
     pthread_t producerThreads[NUM_THREADS];
     pthread_t consumerThreads[NUM_THREADS];
     int threadIndexes[NUM_THREADS];
-    struct timeval stop, start;
 
     // Inicializa a string de producao
     PRODUCT = (char*) malloc(PROD_STRING_REPS*strlen(PROD_STRING)*sizeof(char));
@@ -39,7 +52,7 @@ int main(int argc, char** argv){
     }
 
     // Inicia captura do tempo
-    gettimeofday(&start, NULL);
+    ftime(&start);
 
      // Cria threads de produtores e consumidores e locks
      _locks = (pthread_mutex_t*) malloc(NUM_THREADS*sizeof(pthread_mutex_t));
@@ -56,8 +69,10 @@ int main(int argc, char** argv){
     }
 
     // Finaliza captura do tempo
-    gettimeofday(&stop, NULL);
-    printf("Tempo de execucao: %.3f ms\n", (stop.tv_usec - start.tv_usec)/1000.0);
+    ftime(&end);
+    diff = (int) (1000.0 * (end.time - start.time)
+            + (end.millitm - start.millitm));
+    fprintf(stderr, "Elapsed time: %u ms\n", diff);
     return 1;
  }
 
