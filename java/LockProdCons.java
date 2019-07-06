@@ -18,7 +18,7 @@ public class LockProdCons{
         LockProdCons.workspace = new char[nThreads];
         LockProdCons.locks = new Integer[nThreads];
         for (int i = 0; i < LockProdCons.locks.length; i++){
-            LockProdCons.locks[i] = new Integer('0');
+            LockProdCons.locks[i] = new Integer(0);
         }
 
         long startTime = System.currentTimeMillis(); //Começa a contar o tempo
@@ -98,7 +98,7 @@ class Producer{
             }
         }
 
-        System.out.println("Produtor " + this.index + " > " + "Done!");
+        //System.out.println("Produtor " + this.index + " > " + "Done!");
     }
 }
 
@@ -124,6 +124,6 @@ class Consumer{
             }
         }
 
-        System.out.println("Consumidor " + this.index  + " > " + consumedString);
+        //System.out.println("Consumidor " + this.index  + " > " + consumedString);
     }
 }
