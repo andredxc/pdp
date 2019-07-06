@@ -9,7 +9,7 @@ public class SemProdCons{
         int nThreads = 1;
         String inputString = "";
         String baseString = "a";
-        for(int i = 0; i < 30000; i++){ //Cria uma string grande para testar
+        for(int i = 0; i < 5000; i++){ //Cria uma string grande para testar
             inputString = inputString + baseString;
         }
 
